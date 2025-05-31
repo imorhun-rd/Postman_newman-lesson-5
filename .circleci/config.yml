@@ -8,10 +8,10 @@ jobs:
       - checkout
 
       - run:
-          name: Install Newman + htmlextra
+          name: Install Newman + htmlextra locally
           command: |
-            npm install -g newman
-            npm install -g newman-reporter-htmlextra
+            npm init -y
+            npm install newman newman-reporter-htmlextra
 
       - run:
           name: Create report folder
@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Run Postman tests with HTML report
           command: |
-            newman run tests/collection.postman_collection.json \
+            npx newman run tests/collection.postman_collection.json \
               -e tests/env.postman_environment.json \
               -r htmlextra \
               --reporter-htmlextra-export ./report/report.html
