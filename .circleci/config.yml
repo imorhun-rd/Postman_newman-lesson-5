@@ -1,0 +1,36 @@
+version: 2.1
+
+jobs:
+  postman-test:
+    docker:
+      - image: cimg/node:18.17
+    steps:
+      - checkout
+
+      - run:
+          name: Install Newman + htmlextra
+          command: |
+            npm install -g newman
+            npm install -g newman-reporter-htmlextra
+
+      - run:
+          name: Create report folder
+          command: mkdir -p report
+
+      - run:
+          name: Run Postman tests with HTML report
+          command: |
+            newman run tests/collection.postman_collection.json \
+              -e tests/env.postman_environment.json \
+              -r htmlextra \
+              --reporter-htmlextra-export ./report/report.html
+
+      - store_artifacts:
+          path: report
+          destination: postman-report
+
+workflows:
+  version: 2
+  run-postman-tests:
+    jobs:
+      - postman-test
