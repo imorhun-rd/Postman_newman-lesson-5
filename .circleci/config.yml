@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Run Postman tests with HTML report
           command: |
-            npx newman run tests/Lesson 5.1 - UPDATE.postman_collection.json \
+            npx newman run tests/Lesson_5.postman_collection.json \
               -e tests/clickup.postman_environment.json \
               -r htmlextra \
               --reporter-htmlextra-export ./report/report.html
